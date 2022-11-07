@@ -1,9 +1,9 @@
-import React, { PureComponent } from 'react'
-import PropTypes from 'prop-types'
-import { Text, View } from 'react-native'
-import { Svg, G, Text as SVGText } from 'react-native-svg'
-import * as d3Scale from 'd3-scale'
 import * as array from 'd3-array'
+import * as d3Scale from 'd3-scale'
+import PropTypes from 'prop-types'
+import React, { PureComponent } from 'react'
+import { Text, View } from 'react-native'
+import { G, Svg, Text as SVGText } from 'react-native-svg'
 
 class YAxis extends PureComponent {
     state = {
@@ -51,7 +51,18 @@ class YAxis extends PureComponent {
     }
 
     render() {
-        const { style, data, scale, yAccessor, numberOfTicks, formatLabel, svg, children } = this.props
+        const { style, data, scale, yAccessor, numberOfTicks, formatLabel, svg, children, labelAlignment } = this.props
+
+        let textAnchor = "middle" 
+        let x = "50%"
+        
+        if(labelAlignment == "start"){
+            textAnchor = "start"
+            x = "0%"
+        }else if(labelAlignment == "end"){
+            textAnchor = "end"
+            x = "100%"
+        }
 
         const { height, width } = this.state
 
@@ -119,8 +130,8 @@ class YAxis extends PureComponent {
                                         return (
                                             <SVGText
                                                 originY={y(value)}
-                                                textAnchor={'middle'}
-                                                x={'50%'}
+                                                textAnchor={textAnchor}
+                                                x={x}
                                                 alignmentBaseline={'middle'}
                                                 {...svg}
                                                 key={y(value)}
@@ -155,6 +166,7 @@ YAxis.propTypes = {
     scale: PropTypes.func,
     spacingInner: PropTypes.number,
     spacingOuter: PropTypes.number,
+    labelAlignment: PropTypes.string,
 }
 
 YAxis.defaultProps = {
@@ -166,6 +178,7 @@ YAxis.defaultProps = {
     scale: d3Scale.scaleLinear,
     formatLabel: (value) => value && value.toString(),
     yAccessor: ({ item }) => item,
+    labelAlignment: 'middle',
 }
 
 export default YAxis
