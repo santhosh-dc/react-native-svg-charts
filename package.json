@@ -55,8 +55,8 @@
         "prop-types": "^15.6.0"
     },
     "peerDependencies": {
-        "react": "18.1.0",
-        "react-native": "v0.68.2",
+        "react": ">=16.0.0-alpha.12",
+        "react-native": ">=0.46.0",
         "react-native-svg": "^6.2.1||^7.0.3"
     },
     "devDependencies": {
